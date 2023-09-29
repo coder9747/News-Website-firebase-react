@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Layout from "./Components/Layout/Layout";
+import { Routes, Route } from "react-router-dom"
+import Home from "./Pages/Home/Home";
+import MyContextWraper from "./Context/Context";
+import Signin from "./Pages/Auth/Signin";
+import WriteForUs from "./Pages/WriteForUs/WriteForUs";
+import Admin from "./Pages/Admin/Admin";
+import AdminCreateCatogary from "./Pages/Admin/AdminCreateCatogary";
+import AdminUnapprovedNews from "./Pages/Admin/AdminUnapprovedNews";
+import AdminUpdateNews from "./Pages/Admin/AdminUpdateNews";
+import CategoryNews from "./Pages/CategoryNews/CategoryNews";
+import SingleNews from "./Pages/SingleNews/SingleNews";
+import Contact from "./Components/ContactUs/Contact";
+import AdminDailyThought from "./Pages/Admin/AdminDailyThought";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MyContextWraper>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Signin />} />
+        <Route path="/writeforus" element={<WriteForUs />} />
+        <Route path="/category/:category" element={<CategoryNews />} />
+        <Route path="/news/:newsId" element={<SingleNews />} />
+        <Route path="/get-in-touch" element={<Contact />} />
+        <Route path="/adminonly" element={<Admin />} >
+          <Route path="" element={<AdminCreateCatogary/>} />
+          <Route path="createcategory" element={<AdminCreateCatogary/>} />
+          <Route path="addthought" element={<AdminDailyThought/>} />
+          <Route path="unapproved" element={<AdminUnapprovedNews/>} />
+          <Route path="updatenews" element={<AdminUpdateNews/>} />
+        </Route>
+      </Routes>
+    </MyContextWraper>
+
   );
 }
 
