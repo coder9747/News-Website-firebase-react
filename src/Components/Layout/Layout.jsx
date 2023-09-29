@@ -21,7 +21,6 @@ const Layout = ({ children }) => {
             <Nav />
             {children}
             <NewsLetter/>
-            <Contact/>
             <Footer/>
             <ToastContainer position='top-center' />
         </div>

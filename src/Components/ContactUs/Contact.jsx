@@ -1,6 +1,34 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import {toast} from "react-toastify"
+import { Context } from "../../Context/Context";
+import { ToastContainer } from "react-toastify";
+
 
 const Contact = () => {
+    const [contactInfo,setInfo] = useState({
+        name:"",
+        email:"",
+        phone:"",
+        details:"",
+    });
+    function handleChange(e)
+    {
+        const {name,value} = e.target;
+        setInfo({...contactInfo,[name]:value})
+    }
+    function handleSubmit(e)
+    {
+        e.preventDefault();
+        if(contactInfo.email && contactInfo.phone && contactInfo.details && contactInfo.name)
+        {
+            createMessage(contactInfo);
+        }
+        else
+        {
+            toast.error("Something Went Wrong");
+        }
+    }
+    const {createMessage} = useContext(Context);
     return (
         <>
             <section className="bg-white md:p-20 p-10 lg:py-[120px] overflow-hidden relative z-10">
@@ -85,32 +113,40 @@ const Contact = () => {
                         </div>
                         <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
                             <div className="relative p-8 bg-white rounded-lg shadow-lg sm:p-12">
-                                <form>
+                                <form onSubmit={handleSubmit}>
                                     <ContactInputBox
                                         type="text"
                                         name="name"
                                         placeholder="Your Name"
+                                        value={contactInfo.name}
+                                        change={handleChange}
                                     />
                                     <ContactInputBox
                                         type="text"
                                         name="email"
                                         placeholder="Your Email"
+                                        value={contactInfo.email}
+                                        change={handleChange}
                                     />
                                     <ContactInputBox
                                         type="text"
                                         name="phone"
                                         placeholder="Your Phone"
+                                        value={contactInfo.phone}
+                                        change={handleChange}
                                     />
                                     <ContactTextArea
                                         row="6"
                                         placeholder="Your Message"
                                         name="details"
                                         defaultValue=""
+                                        value={contactInfo.details}
+                                        change={handleChange}
                                     />
                                     <div>
                                         <button
                                             type="submit"
-                                            className="w-full p-3 text-white transition border rounded border-primary bg-primary hover:bg-opacity-90"
+                                            className="w-full p-3 bg-violet-600 text-white transition border rounded border-primary bg-primary hover:bg-opacity-90"
                                         >
                                             Send Message
                                         </button>
@@ -928,6 +964,7 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer position='top-center' />
             </section>
         </>
     );
@@ -935,7 +972,7 @@ const Contact = () => {
 
 export default Contact;
 
-const ContactTextArea = ({ row, placeholder, name, defaultValue }) => {
+const ContactTextArea = ({ row, placeholder, name,value,change }) => {
     return (
         <>
             <div className="mb-6">
@@ -944,14 +981,15 @@ const ContactTextArea = ({ row, placeholder, name, defaultValue }) => {
                     placeholder={placeholder}
                     name={name}
                     className="border-[f0f0f0] w-full resize-none rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"
-                    defaultValue={defaultValue}
+                    value={value}
+                    onChange={change}
                 />
             </div>
         </>
     );
 };
 
-const ContactInputBox = ({ type, placeholder, name }) => {
+const ContactInputBox = ({ type, placeholder, name,value,change }) => {
     return (
         <>
             <div className="mb-6">
@@ -959,6 +997,8 @@ const ContactInputBox = ({ type, placeholder, name }) => {
                     type={type}
                     placeholder={placeholder}
                     name={name}
+                    value={value}
+                    onChange={change}
                     className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"
                 />
             </div>

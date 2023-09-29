@@ -35,11 +35,12 @@ const SingleNews = () => {
                         {news.youtubeLink &&
                             <iframe className='mx-auto md:h-[300px] w-full' src="https://www.youtube.com/embed/r9jwGansp1E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         }
-                        <p className='font-normal my-10 text-slate-600  leading-7 md:text-lg text-sm  tracking-wider'>{news.content2.split(" ").slice(0, 200).join(" ")}</p>
+                        <h4 className='text-xl md:text-2xl break-words pe-10 md:pe-20 text-start font-semibold mt-5'>{news.title2}</h4>
+                        <p className='font-normal my-10 text-slate-600  leading-7 md:text-lg text-sm  tracking-wider'>{news.content2.split(" ").slice(0, 150).join(" ")}</p>
                         {news.tweetId && <div className='flex justify-center items-center '><Tweet id='1706929665729089548' /></div>}
-                        <p className='font-normal my-10 text-slate-600  leading-7 md:text-lg text-sm  tracking-wider'>{news.content2.split(" ").slice(200, 300).join(" ")}</p>
-                        <img src={news.imageUrl2} className='h-[400px] w-screen mx-auto my-2' alt="news Image" />
-                        <p className='font-normal my-10 text-slate-600  leading-7 md:text-lg text-sm  tracking-wider'>{news.content2.split(" ").slice(300).join(" ")}</p>
+                        <p className='font-normal my-10 text-slate-600  leading-7 md:text-lg text-sm  tracking-wider'>{news.content2.split(" ").slice(150, 250).join(" ")}</p>
+                      {news.imageUrl2 &&   <img src={news.imageUrl2} className='h-[400px] w-screen mx-auto my-2' alt="news Image" />}
+                        <p className='font-normal my-10 text-slate-600  leading-7 md:text-lg text-sm  tracking-wider'>{news.content2.split(" ").slice(250).join(" ")}</p>
                     </div>
                     <p className='text-xl font-normal text-slate-500 text-end'>Author :{news.name}</p>
                 </div>

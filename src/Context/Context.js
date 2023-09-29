@@ -165,6 +165,35 @@ export default function MyContextWraper({children})
         }
         setLoading(false);
     }
+    async function createMessage(obj)
+    {
+        obj.time = serverTimestamp();
+        setLoading(true);
+        try {
+            const collectionRef = collection(database,"messages");
+            await addDoc(collectionRef,obj);
+            toast.success("Succes");
+            
+        } catch (error) {
+            toast.error("Something Went Wrong");
+        }
+        setLoading(false);
+    }
+    async function subscribeToEmail(email)
+    {
+        setLoading(true);
+        try {
+            const obj = {email};
+            obj.time = serverTimestamp();
+            const collectionRef = collection(database,"emails");
+            await addDoc(collectionRef,obj);
+            toast.success("Succesfully Subscribed");
+        } catch (error) {
+            toast.error("Something Went Wrong");
+        }
+        setLoading(false);
+
+    }
     useEffect(()=>
     {
         getAllCategory();
@@ -182,6 +211,8 @@ export default function MyContextWraper({children})
         allPost,
         getAllPosts,
         addDailyThought,
+        createMessage,
+        subscribeToEmail,
     }}
     >
         {children}
