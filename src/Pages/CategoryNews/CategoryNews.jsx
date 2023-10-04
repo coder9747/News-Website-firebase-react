@@ -79,7 +79,7 @@ function CategoryNews() {
                 })}
             </div>
 
-            {lastDoc && <button onClick={() => getMore()}>Next</button>}
+            {lastDoc && <button className='border my-6 mx-auto block p-2 rounded-xl bg-red-400 text-white' onClick={() => getMore()}>Load More</button>}
         </Layout>
     )
 }

@@ -19,6 +19,9 @@ export default function MyContextWraper({children})
     const [lastDoc,setDoc] = useState(null);
     const [allPost,setPost] = useState(null);
     const [dailyThought,setThought] = useState([]);
+    const [carsoleNews,setCarsolNews] = useState(null);
+    const [searchNews,setNews] = useState(null);
+    const [searchNewsLastDoc,setSearchNewsLastDoc] = useState([]);
     async function signInWithGoogle()
     {
         setLoading(true);
@@ -127,6 +130,7 @@ export default function MyContextWraper({children})
                 const data = await getDocs(q);
                 const last = data.docs[data.docs.length -1];
                 setDoc(last);
+                console.log(data);
                 setPost(data.docs.map((item)=>
                 {
                     return {...item.data(),id:item.id};
@@ -194,10 +198,47 @@ export default function MyContextWraper({children})
         setLoading(false);
 
     }
+    async function carsoleTopFiveNews()
+    {
+        setLoading(true);
+        try {
+            const collectionRef = collection(database,"posts");
+            const q = query(collectionRef,limit(5));
+            const data = await getDocs(q);
+            const postData = data.docs.map((item)=>
+            {
+                return {...item.data(),id:item.id};
+            })
+            setCarsolNews(postData);
+            
+        } catch (error) {
+            toast.error("Something Went Wrong");
+        }
+        setLoading(false);
+    }
+    async function searchWithTags(string)
+    {
+        setLoading(true);
+        try {
+            const collectionRef = collection(database,"posts");
+            const q = query(collectionRef,where("tags","array-contains-any",string.split(" ")));
+            const data = await getDocs(q);
+            const posts = data.docs.map((item)=>
+            {
+                return {...item.data(),id:item.id};
+            })
+            setNews(posts);
+            navigate('/')
+        } catch (error) {
+            toast.error("Something Went Wrong");
+        }
+        setLoading(false);
+    }
     useEffect(()=>
     {
         getAllCategory();
         getAllPosts();
+        carsoleTopFiveNews()
     },[])
     return(<Context.Provider
     value={{
@@ -213,6 +254,10 @@ export default function MyContextWraper({children})
         addDailyThought,
         createMessage,
         subscribeToEmail,
+        carsoleNews,
+        searchWithTags,
+        searchNews,
+        setNews,
     }}
     >
         {children}
