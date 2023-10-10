@@ -12,6 +12,7 @@ import CategoryNews from "./Pages/CategoryNews/CategoryNews";
 import SingleNews from "./Pages/SingleNews/SingleNews";
 import Contact from "./Components/ContactUs/Contact";
 import AdminDailyThought from "./Pages/Admin/AdminDailyThought";
+import SearchNews from "./Pages/SearchNews/SearchNews";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/category/:category" element={<CategoryNews />} />
         <Route path="/news/:newsId" element={<SingleNews />} />
         <Route path="/get-in-touch" element={<Contact />} />
+        <Route path="/search" element={<SearchNews />} />
         <Route path="/adminonly" element={<Admin />} >
           <Route path="" element={<AdminCreateCatogary/>} />
           <Route path="createcategory" element={<AdminCreateCatogary/>} />

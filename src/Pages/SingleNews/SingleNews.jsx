@@ -24,7 +24,7 @@ const SingleNews = () => {
     }, [newsId])
     return (
         <Layout>
-            {news && <div className='lg:px-56 md:px-28 px-10'>
+            {news && <div className='single-news px-10'>
                {parse(news.content)}
             </div>}
         </Layout>

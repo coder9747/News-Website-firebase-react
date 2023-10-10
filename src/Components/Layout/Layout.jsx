@@ -1,12 +1,10 @@
 import React, { useContext } from 'react'
 import Nav from '../Navbar/Nav'
 import Footer from '../Footer/Footer';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Context } from '../../Context/Context';
 import { Spinner } from 'flowbite-react';
-import Contact from '../../Components/ContactUs/Contact';
 import NewsLetter from '../../Components/Newsletter/NewsLetter';
 import DailyThought from '../DailyThought/DailyThought';
 

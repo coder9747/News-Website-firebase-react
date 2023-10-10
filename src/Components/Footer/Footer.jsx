@@ -56,26 +56,10 @@ export default function FooterWithLogo() {
               </li>
             </ul>
           </div>
-          <div>
-            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Download</h2>
-            <ul class="text-gray-500 dark:text-gray-400 font-medium">
-              <li class="mb-4">
-                <a href="#" class="hover:underline">iOS</a>
-              </li>
-              <li class="mb-4">
-                <a href="#" class="hover:underline">Android</a>
-              </li>
-              <li class="mb-4">
-                <a href="#" class="hover:underline">Windows</a>
-              </li>
-              <li class="mb-4">
-                <a href="#" class="hover:underline">MacOS</a>
-              </li>
-            </ul>
-          </div>
+        
         </div>
         <div class="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-          <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2023 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.
+          <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2023 <a href="https://flowbite.com/">BharatTop™</a>. All Rights Reserved.
           </span>
           <div class="flex mt-4 space-x-5 sm:justify-center md:mt-0">
             <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white">
