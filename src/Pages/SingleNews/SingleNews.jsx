@@ -21,7 +21,6 @@ const SingleNews = () => {
             const data = await getDoc(collectionRef);
             console.log(data.data())
             setNews(data.data());
-            await import('https://platform.twitter.com/widgets.js');
         })()
         setLoading(false);
     }, [newsId])
