@@ -11,9 +11,10 @@ import { Modal } from "flowbite-react";
 
 export default function NavbarWithCTAButton() {
     const navigate = useNavigate();
-    const { allcategory, searchWithTags, setNews,searchText,setSearchText } = useContext(Context);
+    const [search, setSearch] = useState('');
+    const { allcategory } = useContext(Context);
     const [modal, setModal] = useState(false);
-    
+
     function handleSignOut() {
         try {
             signOut(auth);
@@ -25,10 +26,9 @@ export default function NavbarWithCTAButton() {
         }
     }
     function handleSearch() {
-        if (searchText) {
-            navigate("/search")
-            searchWithTags()
-            setModal(false);
+        setModal(false);
+        if (search) {
+           navigate(`/search?data=${search}`)
         }
     }
     const isAdmin = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).role : false;
@@ -36,15 +36,10 @@ export default function NavbarWithCTAButton() {
         <div>
             <Navbar
                 fluid
-               
+
                 className="bg-red-400"
             >
                 <Navbar.Brand >
-                    {/* <img
-                        alt="Flowbite React Logo"
-                        className="mr-3 md:h-16 h-12  "
-                        src="https://w0.peakpx.com/wallpaper/204/673/HD-wallpaper-ias-national-emblem-indian-administrative-service-satyameva-jayate.jpg"
-                    /> */}
                     <Link to={'/'} className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
                         Bharat Top
                     </Link>
@@ -58,13 +53,13 @@ export default function NavbarWithCTAButton() {
 
                 </div>
                 <Navbar.Collapse>
-                    
-                        {
-                            allcategory && allcategory.map((item, idx) => {
-                                return <Link  className="font-bold" id={item.id} to={`/category/${item.name}`}>{item.name}</Link>
-                            })
-                        }
-                  
+
+                    {
+                        allcategory && allcategory.map((item, idx) => {
+                            return <Link className="font-bold" id={item.id} to={`/category/${item.name}`}>{item.name}</Link>
+                        })
+                    }
+
                     {localStorage.getItem("user") && <Navbar.Link >
                         <button onClick={handleSignOut}>
                             Logout
@@ -84,7 +79,7 @@ export default function NavbarWithCTAButton() {
                 <Modal.Header>Search</Modal.Header>
                 <Modal.Body>
                     <div className="space-y-6">
-                        <input value={searchText} onChange={(e) => setSearchText(e.target.value)} type="text" id="search-navbar" class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." />
+                        <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" id="search-navbar" class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." />
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

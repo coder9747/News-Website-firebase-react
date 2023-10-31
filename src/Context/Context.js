@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { collapseToast, toast } from "react-toastify";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../Firebase/Config-file";
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, orderBy, query, serverTimestamp, startAfter, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, orderBy, query, serverTimestamp, startAfter, updateDoc, where } from "firebase/firestore";
 import { database } from "../Firebase/Config-file";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,6 @@ export default function MyContextWraper({ children }) {
     const [allPost, setPost] = useState(null);
     const [dailyThought, setThought] = useState([]);
     const [carsoleNews, setCarsolNews] = useState(null);
-    const [searchNews, setNews] = useState(null);
     const [searchNewsLastDoc, setSearchNewsLastDoc] = useState(null);
     const [infocusNews, setInfocus] = useState(null);
     const [searchText, setSearchText] = useState('');
@@ -198,45 +197,88 @@ export default function MyContextWraper({ children }) {
         }
         setLoading(false);
     }
-    async function searchWithTags() {
-        console.log(searchText);
+    // async function searchWithTags() {
+    //     console.log(searchText);
+    //     setLoading(true);
+    //     try {
+    //         if (searchNewsLastDoc == null) {
+    //             const collectionRef = collection(database, "posts");
+    //             const q = query(collectionRef, where("tags", "array-contains-any", searchText.split(" ")), limit(8), orderBy("time", "desc"));
+    //             const data = await getDocs(q);
+    //             setSearchNewsLastDoc(data.docs[data.docs.length - 1]);
+    //             console.log(data);
+    //             const posts = data.docs.map((item) => {
+    //                 return { ...item.data(), id: item.id };
+    //             })
+    //             console.log(posts);
+    //             setNews(posts);
+    //         }
+    //         else {
+    //             const collectionRef = collection(database, "posts");
+    //             const q = query(collectionRef, where("tags", "array-contains-any", searchText.split(' ')), orderBy("time", "desc"), startAfter(searchNewsLastDoc), limit(8));
+    //             const data = await getDocs(q);
+    //             console.log(data);
+    //             setSearchNewsLastDoc(data.docs[data.docs.length - 1]);
+    //             const posts = data.docs.map((item) => {
+    //                 return { ...item.data(), id: item.id };
+    //             })
+
+    //             setNews((pre) => {
+    //                 return [...pre, ...posts];
+    //             })
+    //         }
+
+
+
+    //     } catch (error) {
+    //         console.log(error);
+    //         toast.error("Something Went Wrong");
+    //     }
+    //     setLoading(false);
+    // }
+    async function approveNews(newId) {
         setLoading(true);
         try {
-            if (searchNewsLastDoc == null) {
-                const collectionRef = collection(database, "posts");
-                const q = query(collectionRef, where("tags", "array-contains-any", searchText.split(" ")), limit(8),orderBy("time","desc"));
-                const data = await getDocs(q);
-                setSearchNewsLastDoc(data.docs[data.docs.length - 1]);
-                console.log(data);
-                const posts = data.docs.map((item) => {
-                    return { ...item.data(), id: item.id };
-                })
-                console.log(posts);
-                setNews(posts);
-            }
-            else
-            {
-                const collectionRef = collection(database,"posts");
-                const q = query(collectionRef,where("tags","array-contains-any",searchText.split(' ')),orderBy("time","desc"),startAfter(searchNewsLastDoc),limit(8));
-                const data = await getDocs(q);
-                console.log(data);
-                setSearchNewsLastDoc(data.docs[data.docs.length-1]);
-                const posts = data.docs.map((item)=>
-                {
-                    return {...item.data(),id:item.id};
-                })
-                
-                setNews((pre)=>
-                {
-                    return [...pre,...posts];
-                })
-            }
-
+            const docRef = doc(database, "posts", newId);
+            await updateDoc(docRef, { approved: true, time: serverTimestamp() });
+            toast.success("News Approved");
+            window.location.reload();
+        } catch (error) {
+            toast.error("Error Occured");
+        }
+        setLoading(false);
+    }
+    async function handleUpdateNews({ data, newsId }) {
+        console.log(data);
+        setLoading(true);
+        try {
+            const docRef = doc(database, "posts", newsId);
+            await updateDoc(docRef, data);
+            toast.success("news Updatted Succes");
+            window.location.reload();
 
 
         } catch (error) {
-            console.log(error);
-            toast.error("Something Went Wrong");
+            console.log(error)
+            toast.error("Error Occured");
+        }
+        setLoading(false);
+
+
+    }
+    async function deleteNews(newsId) {
+        setLoading(true);
+        try {
+            const docRef = doc(database, "posts", newsId);
+            await deleteDoc(docRef);
+            toast.success("Doc Deleted Succesfull");
+            setTimeout(() => {
+                navigate("/");
+                
+            }, 500);
+
+        } catch (error) {
+            toast.error("Error Occured");
         }
         setLoading(false);
     }
@@ -268,6 +310,9 @@ export default function MyContextWraper({ children }) {
     }, [])
     return (<Context.Provider
         value={{
+            deleteNews,
+            handleUpdateNews,
+            approveNews,
             loading,
             setLoading,
             signInWithGoogle,
@@ -281,14 +326,7 @@ export default function MyContextWraper({ children }) {
             createMessage,
             subscribeToEmail,
             carsoleNews,
-            searchWithTags,
-            searchNews,
-            setNews,
             infocusNews,
-            searchText,
-            setSearchText,
-            setSearchNewsLastDoc,
-            searchNewsLastDoc,
         }}
     >
         {children}

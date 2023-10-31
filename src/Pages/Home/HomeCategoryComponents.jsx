@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { database } from '../../Firebase/Config-file';
 import { Context } from "../../Context/Context"
 import { toast } from 'react-toastify';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HomeCategoryComponents = ({ category }) => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const HomeCategoryComponents = ({ category }) => {
   }
   return (
     <div className='min-h-[500px] border md:px-5 px-2 py-2 '>
-      <p className='text-center lg:text-2xl md:text-xl text-xs my-2 font-bold '>{category}</p>
+      <p className='text-center lg:text-2xl md:text-xl text-xs my-2 font-bold '>{category[0].toUpperCase() + category.slice(1, category.length)}</p>
       <div className='grid place-items-center grid-cols-1  md:grid-cols-2'>
         {post && post.slice(0, 2).map((item) => {
           console.log(item);
@@ -63,20 +63,20 @@ const HomeCategoryComponents = ({ category }) => {
       <div className='grid md:grid-cols-6'>
         {post && post.slice(2, post.length).map((item) => {
           return (
-          <Link to={`/news/${item.id}`} className='col-span-3  p-2 grid grid-cols-5  min-h-36 border '>
-            <img src={item.thumbnail} alt="" className='w-52 object-cover col-span-1  h-full' />
-            <p className='col-span-4 px-1'>
-              <p className='font-bold md:text-xl text-sm'>{item.title.slice(0,100)}...</p>
-              <p className='font-normal  text-sm '>{item.description.slice(0,200)}...</p>
-            </p>
-          </Link>
+            <Link to={`/news/${item.id}`} className='col-span-3  p-2 grid grid-cols-5  min-h-36 border '>
+              <img src={item.thumbnail} alt="" className='w-52 object-cover col-span-1  h-full' />
+              <p className='col-span-4 px-1'>
+                <p className='font-bold md:text-xl text-sm'>{item.title.slice(0, 100)}...</p>
+                <p className='font-normal  text-sm '>{item.description.slice(0, 200)}...</p>
+              </p>
+            </Link>
           )
         })}
 
 
 
       </div>
-      <button  onClick={ ()=>navigate(`/category/${category}`)}  className='mx-auto block my-2 bg-red-400 md:p-2 p-1 one text-white'>Explore {category}</button>
+      <button onClick={() => navigate(`/category/${category}`)} className='mx-auto block my-2 bg-red-400 md:p-2 p-1 one text-white'>Explore {category}</button>
     </div>
   )
 }

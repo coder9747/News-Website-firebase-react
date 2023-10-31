@@ -13,8 +13,12 @@ import SingleNews from "./Pages/SingleNews/SingleNews";
 import Contact from "./Components/ContactUs/Contact";
 import AdminDailyThought from "./Pages/Admin/AdminDailyThought";
 import SearchNews from "./Pages/SearchNews/SearchNews";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useState } from "react";
 
 function App() {
+  const [value, setValue] = useState('');
   return (
     <MyContextWraper>
       <Routes>
@@ -34,6 +38,8 @@ function App() {
         </Route>
       </Routes>
     </MyContextWraper>
+    // <ReactQuill theme="snow" value={value} onChange={setValue} />
+
 
   );
 }

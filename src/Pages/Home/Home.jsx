@@ -26,25 +26,25 @@ const Home = () => {
               Latest News
             </p>
             {carsoleNews && carsoleNews.map((item) => {
-              return <Link to={`/news/${item.id}`} className='my-2'>
+              return <Link to={`/news/${item?.id}`} className='my-2'>
                 <p>{item.title}</p>
                 <hr className='h-px my-2 bg-gray-200 border-0 dark:bg-gray-700' />
               </Link>
             })}
           </div>
-          {infocusNews && <div className='basis-6/12  md:order-2 lg:grid lg:grid-cols-2 lg:grid-rows-3'>
-            <Link to={`/news/${infocusNews[0].id}`} className='lg:col-span-2 md:row-span-2 l p-2'>
-              <img src={`${infocusNews[0].thumbnail}`} className=' w-full' alt="" />
-              <h4 className='text-xl'>{infocusNews[0].title.slice(0, 120)}...</h4>
-              <p className='text-sm font-normal'>{infocusNews[0].description}...</p>
+          {infocusNews && infocusNews.length > 2 && <div className='basis-6/12  md:order-2 lg:grid lg:grid-cols-2 lg:grid-rows-3'>
+            <Link to={`/news/${infocusNews[0]?.id}`} className='lg:col-span-2 md:row-span-2 l p-2'>
+              <img src={`${infocusNews[0]?.thumbnail}`} className=' w-full' alt="" />
+              <h4 className='text-xl'>{infocusNews[0]?.title.slice(0, 120)}...</h4>
+              <p className='text-sm font-normal'>{infocusNews[0]?.description}...</p>
             </Link>
-            <Link to={`/news/${infocusNews[1].id}`} className='flex-1 l p-2'>
+            <Link to={`/news/${infocusNews[1]?.id}`} className='flex-1 l p-2'>
               <img src={`${infocusNews[1].thumbnail}`} className='w-full h-40 md:h-32' alt="" />
               <h4 className='text-sm font-bold'>{infocusNews[1].title.slice(0, 100)}...</h4>
               <p className='text-sm font-normal'>{infocusNews[1].description.slice(0, 150)}</p>
             </Link>
-            <Link to={`/news/${infocusNews[2].id}`} className='flex-1 l p-2'>
-              <img src={`${infocusNews[2].thumbnail}`} className='w-full h-40 md:h-32' alt="" />
+            <Link to={`/news/${infocusNews[2]?.id}`} className='flex-1 l p-2'>
+              <img src={`${infocusNews[2]?.thumbnail}`} className='w-full h-40 md:h-32' alt="" />
               <h4 className='text-sm font-bold'>{infocusNews[2].title.slice(0, 100)}...</h4>
               <p className='text-sm font-normal'>{infocusNews[2].description.slice(0, 150)}</p>
             </Link>
